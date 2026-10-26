@@ -291,7 +291,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Mẹo: thêm nút “Khoanh Tìm” vào bảng Cài đặt nhanh (kéo từ trên xuống, bấm sửa) để kích hoạt khi không dùng thanh cử chỉ — nhất là máy dùng phím điều hướng 3 nút. Ra được đúng Circle to Search hay Gemini còn tuỳ máy: Google quyết định theo dòng máy và phiên bản ứng dụng Google."
+            android:text="Mẹo: thêm nút “Khoanh Tìm” vào bảng Cài đặt nhanh (kéo từ trên xuống, bấm sửa) để kích hoạt nhanh. Riêng máy Xiaomi/HyperOS: cử chỉ giữ thanh bị XiaoAI giữ riêng cho nó, app bên ngoài không giành được — hãy dùng chế độ điều hướng Nút bấm rồi giữ nút Home (hệ thống tự gọi trợ lý mặc định Google), hoặc vào Cài đặt → Cài đặt bổ sung → Phím tắt cử chỉ → Chạm vào mặt lưng, gán chạm 2 lần mở ứng dụng “Mở Circle to Search”. Ra được đúng Circle to Search hay Gemini còn tuỳ máy: Google quyết định theo dòng máy và phiên bản ứng dụng Google."
             android:textColor="#6E6E7A"
             android:textSize="12sp" />
 

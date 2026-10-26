@@ -40,6 +40,22 @@
             android:noHistory="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Ten goi phu co bieu tuong rieng ngoai man hinh chinh: de gan
+             vao cac phim tat cua hang (Go mat lung Xiaomi, phim tat nut,
+             Routines...) — cham la kich hoat Circle to Search ngay,
+             khong mo man hinh cai dat. -->
+        <activity-alias
+            android:name=".TriggerAlias"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Mở Circle to Search"
+            android:targetActivity=".TriggerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <service
             android:name=".OverlayService"
             android:exported="false"
