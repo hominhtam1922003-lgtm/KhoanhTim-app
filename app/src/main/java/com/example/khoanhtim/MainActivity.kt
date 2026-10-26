@@ -112,7 +112,7 @@ class MainActivity : Activity() {
         switchOverlay.isChecked = OverlayService.running || (wantOn && hasOverlay)
         syncingSwitch = false
         tvServiceState.text = if (OverlayService.running) {
-            "Đang chạy — giữ thanh ở cạnh dưới để tìm"
+            "Đang chạy — giữ thanh điều hướng của máy để tìm"
         } else {
             "Đang tắt"
         }

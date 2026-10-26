@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.PixelFormat
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -23,11 +22,12 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 
 /**
- * Dich vu giu mot thanh nho o canh duoi man hinh (dung vi tri thanh
- * dieu huong cu chi). GIU thanh ~nua giay = ban lenh Circle to Search.
- * Bam nhanh khong lam gi de tranh kich hoat nham; keo lech nhieu thi
- * huy giu. Thanh chi nam trong vung hien thi cua ung dung (khong de
- * len thanh he thong) nen khong chan nut Home/thao tac cua may.
+ * Dich vu giu mot VUNG CHAM VO HINH nam de DUNG TREN thanh dieu
+ * huong mac dinh cua may (dung vi tri + chieu cao thanh cu chi goc).
+ * Nguoi dung cu GIU TREN THANH CUA MAY nhu binh thuong ~nua giay la
+ * ban lenh Circle to Search; khong co thanh la nao xuat hien.
+ * Bam nhanh khong lam gi; keo lech nhieu (vuot Home/man gan day)
+ * thi huy giu — vuot dieu huong cua he thong van hoat dong rieng.
  */
 class OverlayService : Service() {
 
@@ -87,7 +87,7 @@ class OverlayService : Service() {
         )
         val notif: Notification = Notification.Builder(this, channelId)
             .setContentTitle("Khoanh Tìm đang chạy")
-            .setContentText("Giữ thanh ở cạnh dưới màn hình để tìm bằng vòng tròn")
+            .setContentText("Giữ thanh điều hướng của máy để tìm bằng vòng tròn")
             .setSmallIcon(R.drawable.ic_tile)
             .setContentIntent(openApp)
             .setOngoing(true)
@@ -108,27 +108,30 @@ class OverlayService : Service() {
         val density = resources.displayMetrics.density
         fun dp(v: Int) = (v * density).toInt()
 
-        // Vien thuoc nho o giua thanh (giong thanh dieu huong cu chi)
-        val pill = View(this).apply {
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp(3).toFloat()
-                setColor(0x8CFFFFFF.toInt())
-            }
-        }
-        val pillLp = FrameLayout.LayoutParams(dp(120), dp(5)).apply {
-            gravity = Gravity.CENTER
-        }
+        // Vung cham HOAN TOAN trong suot: khong ve gi ca, chi nam nghe
+        // thao tac giu tren thanh dieu huong cua may
         val container = FrameLayout(this).apply {
-            addView(pill, pillLp)
+            setBackgroundColor(0x00000000)
             setOnTouchListener { _, ev -> onStripTouch(ev) }
         }
 
+        // Chieu cao dung bang thanh dieu huong goc cua may
+        val navH = try {
+            val resId = resources.getIdentifier(
+                "navigation_bar_height", "dimen", "android"
+            )
+            if (resId > 0) resources.getDimensionPixelSize(resId) else 0
+        } catch (e: Exception) {
+            0
+        }
+        val stripHeight = maxOf(navH, dp(28))
+
         val params = WindowManager.LayoutParams(
             dp(170),
-            dp(30),
+            stripHeight,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT
         ).apply {
             gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL

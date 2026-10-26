@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Giữ thanh nhỏ ở cạnh dưới màn hình để gọi Circle to Search &amp; Gemini — không cần root."
+            android:text="Giữ ngay thanh điều hướng mặc định của máy để gọi Circle to Search &amp; Gemini — app chỉ đặt một vùng chạm vô hình đè đúng lên thanh đó, không thêm thanh lạ nào. Không cần root."
             android:textColor="#A8A8B3"
             android:textSize="14sp" />
 
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thanh cử chỉ"
+                    android:text="Thanh cử chỉ (vô hình, trên thanh của máy)"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Bắt buộc để vẽ thanh cử chỉ ở cạnh dưới màn hình."
+                android:text="Bắt buộc để đặt vùng chạm vô hình đè đúng lên thanh điều hướng mặc định ở cạnh dưới màn hình."
                 android:textColor="#A8A8B3"
                 android:textSize="13sp" />
 
