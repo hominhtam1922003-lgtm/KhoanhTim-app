@@ -17,11 +17,15 @@ class TriggerActivity : Activity() {
         super.onCreate(savedInstanceState)
         val delay = intent.getLongExtra(EXTRA_DELAY, 250L)
         Handler(Looper.getMainLooper()).postDelayed({
-            val ok = Trigger.fire(this)
-            if (!ok) {
-                Toast.makeText(
+            when (Trigger.fire(this)) {
+                Trigger.RESULT_FAILED -> Toast.makeText(
                     this,
-                    "Chưa gọi được trợ lý. Kiểm tra đã đặt Google làm trợ lý mặc định chưa.",
+                    "Chưa gọi được. Kiểm tra đã đặt Google làm trợ lý mặc định chưa (bước 2).",
+                    Toast.LENGTH_LONG
+                ).show()
+                Trigger.RESULT_ASSIST_FALLBACK -> Toast.makeText(
+                    this,
+                    "Chỉ mở được trợ lý thường — máy chưa cho vào thẳng Circle to Search.",
                     Toast.LENGTH_LONG
                 ).show()
             }

@@ -11,8 +11,8 @@ android {
         applicationId 'com.example.khoanhtim'
         minSdk 26
         targetSdk 34
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
     }
 
     buildTypes {
@@ -30,8 +30,12 @@ android {
     }
 }
 
-// Khong phu thuoc thu vien ngoai: chi dung Android framework thuan
-// (overlay + Voice Interaction la API he thong).
+// Phu thuoc duy nhat: HiddenApiBypass de goi API an cua he thong
+// (IVoiceInteractionManagerService.showSessionFromSession) — dung
+// thu vien + co che ma MiCTS dung de kich hoat Circle to Search.
+dependencies {
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
+}
 
 // ---- Icon launcher ----
 // Kenh day code len GitHub chi nhan file VAN BAN nen cac PNG icon duoc

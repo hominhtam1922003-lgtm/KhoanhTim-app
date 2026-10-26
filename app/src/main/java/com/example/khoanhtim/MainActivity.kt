@@ -69,8 +69,14 @@ class MainActivity : Activity() {
         findViewById<Button>(R.id.btnBattery).setOnClickListener { openBatterySettings() }
         findViewById<Button>(R.id.btnOem).setOnClickListener { openOemAutostart() }
         findViewById<Button>(R.id.btnTest).setOnClickListener {
-            val ok = Trigger.fire(this)
-            if (!ok) toast("Chưa gọi được trợ lý — kiểm tra bước 2 (Google làm trợ lý mặc định)")
+            when (Trigger.fire(this)) {
+                Trigger.RESULT_OMNIENT ->
+                    toast("Đã gọi đúng Circle to Search ✓")
+                Trigger.RESULT_ASSIST_FALLBACK ->
+                    toast("Chỉ mở được trợ lý thường (đường dự phòng) — chưa vào thẳng Circle to Search")
+                else ->
+                    toast("Chưa gọi được — kiểm tra bước 2 (Google làm trợ lý mặc định)")
+            }
         }
     }
 
