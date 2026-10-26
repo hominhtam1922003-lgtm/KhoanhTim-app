@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.khoanhtim'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.example.khoanhtim'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+// Khong phu thuoc thu vien ngoai: chi dung Android framework thuan
+// (overlay + Voice Interaction la API he thong).
+
+// ---- Icon launcher ----
+// Kenh day code len GitHub chi nhan file VAN BAN nen cac PNG icon duoc
+// luu dang base64 trong app/icon-b64/ va giai nen luc build (nhu cac
+// app truoc); cay local giu PNG that cho buoc kiem chung.
+def ctsIconOut = layout.buildDirectory.dir('generated/ctsIcons/res')
+tasks.register('generateCtsIcons') {
+    def b64Dir = layout.projectDirectory.dir('icon-b64')
+    inputs.dir(b64Dir)
+    outputs.dir(ctsIconOut)
+    doLast {
+        def srcRoot = b64Dir.asFile
+        def outRoot = ctsIconOut.get().asFile
+        srcRoot.eachFileRecurse { f ->
+            if (f.name.endsWith('.b64')) {
+                def rel = srcRoot.toPath().relativize(f.toPath()).toString()
+                def target = new File(outRoot, rel.replace('.b64', ''))
+                target.parentFile.mkdirs()
+                target.bytes = java.util.Base64.decoder.decode(
+                    f.getText('UTF-8').replaceAll('\\s', ''))
+            }
+        }
+    }
+}
+android {
+    sourceSets {
+        main {
+            res.srcDirs += ctsIconOut.get().asFile
+        }
+    }
+}
+tasks.configureEach { t ->
+    if (t.name == 'preBuild') {
+        t.dependsOn('generateCtsIcons')
+    }
+}
